@@ -18,19 +18,18 @@ A full-stack **Meeting Slot Booking System** built for seamless scheduling, real
 
 ---
 
-## 📸 Screenshots
+## 📸 Screenshots & Demo
 
-<!-- Add screenshots here after frontend is built -->
+### Screenshots
+*(Add your screenshots here)*
+- [ ] Dashboard View
+- [ ] Create Meeting / Slot Picker
+- [ ] Calendar View
+- [ ] Reports Analytics
 
-| Screen              | Preview |
-| ------------------- | ------- |
-| Calendar Dashboard  | _TODO_  |
-| Create Meeting      | _TODO_  |
-| Slot Picker         | _TODO_  |
-| Meeting Detail      | _TODO_  |
-| My Meetings         | _TODO_  |
-| Room Management     | _TODO_  |
-| Reports             | _TODO_  |
+### Demo Video Link
+*(Paste your YouTube or Loom demo video link here)*
+- **Link:** `[Insert Demo Link]`
 
 ---
 
@@ -49,22 +48,29 @@ git clone https://github.com/<your-username>/Blaze_Test.git
 cd Blaze_Test
 ```
 
-### 2. Backend Setup
+### 2. Backend Setup (`/server`)
 
 ```bash
 cd server
 npm install
 ```
 
-Create a `.env` file in the `server/` directory (see Environment Variables below), then start the server:
+Create a `.env` file in the `server/` directory:
+
+```env
+DATABASE_URL=postgresql://postgres:your_password@localhost:5432/meeting_booking
+JWT_SECRET=your-super-secret-jwt-key
+JWT_EXPIRES_IN=7d
+PORT=5000
+```
+
+Start the server (this will automatically run all SQL migrations and seed the database on the first run):
 
 ```bash
 npm run dev
 ```
 
-The server will automatically run all SQL migrations and seed the database on first startup.
-
-### 3. Frontend Setup
+### 3. Frontend Setup (`/client`)
 
 ```bash
 cd client
@@ -76,37 +82,9 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-## 🔐 Environment Variables
-
-### `server/.env`
-
-```env
-# Database
-DATABASE_URL=postgresql://postgres:your_password@localhost:5432/meeting_booking
-
-# JWT
-JWT_SECRET=your-super-secret-jwt-key-change-in-production
-JWT_EXPIRES_IN=7d
-
-# SMTP (optional — for email invites)
-SMTP_HOST=smtp.ethereal.email
-SMTP_PORT=587
-SMTP_USER=your_ethereal_user
-SMTP_PASS=your_ethereal_pass
-
-# Server
-PORT=5000
-```
-
-### `client/.env`
-
-```env
-VITE_API_URL=http://localhost:5000/api
-```
-
----
-
 ## 🔑 Default Credentials (Seed Data)
+
+The database is heavily seeded upon startup. Use these credentials to test the application:
 
 | Role  | Email               | Password    |
 | ----- | ------------------- | ----------- |
@@ -115,16 +93,6 @@ VITE_API_URL=http://localhost:5000/api
 | User  | bob@blaze.com       | User@123    |
 | User  | charlie@blaze.com   | User@123    |
 | User  | diana@blaze.com     | User@123    |
-
-### Seeded Meeting Rooms
-
-| Room               | Capacity | Equipment                    |
-| ------------------ | -------- | ---------------------------- |
-| Boardroom Alpha    | 20       | Projector, Whiteboard, Video |
-| Huddle Room Beta   | 6        | Whiteboard, TV Screen        |
-| Conference Room C  | 12       | Projector, Video Conf        |
-| Phone Booth D      | 2        | None                         |
-| Innovation Lab     | 30       | Projector, Whiteboard, 3D Printer |
 
 ---
 
@@ -146,10 +114,11 @@ VITE_API_URL=http://localhost:5000/api
 | PUT    | `/api/meetings/:id`   | Edit / reschedule      |
 | DELETE | `/api/meetings/:id`   | Cancel (soft-delete)   |
 
-### Availability
+### Availability & Calendar
 | Method | Endpoint                                    | Description       |
 | ------ | ------------------------------------------- | ----------------- |
 | GET    | `/api/availability?participants=&date=`     | Free slots        |
+| GET    | `/api/calendar?from=&to=`                   | Calendar feed     |
 
 ### Rooms
 | Method | Endpoint          | Description         |
@@ -157,11 +126,6 @@ VITE_API_URL=http://localhost:5000/api
 | GET    | `/api/rooms`      | List rooms          |
 | POST   | `/api/rooms`      | Create room (admin) |
 | PUT    | `/api/rooms/:id`  | Edit room (admin)   |
-
-### Calendar
-| Method | Endpoint                      | Description      |
-| ------ | ----------------------------- | ---------------- |
-| GET    | `/api/calendar?from=&to=`    | Calendar feed    |
 
 ### Reports
 | Method | Endpoint                        | Description          |
@@ -176,38 +140,18 @@ VITE_API_URL=http://localhost:5000/api
 
 ```
 Blaze_Test/
-├── server/           # Express backend
-│   ├── migrations/   # Raw SQL migration files
-│   ├── src/
-│   │   ├── config/       # DB connection
-│   │   ├── middleware/    # Auth, validation
-│   │   ├── routes/       # API routes
-│   │   ├── controllers/  # Request handlers
-│   │   ├── services/     # Business logic
-│   │   ├── validators/   # express-validator schemas
-│   │   └── utils/        # Helpers (ics, jitsi)
-│   └── postman/      # Postman collection
-├── client/           # React + Vite frontend
+├── database_schema.sql   # Standalone DB schema dump
+├── readme.txt            # Quick credentials reference
+├── server/               # Express backend
+│   ├── migrations/       # Raw SQL migration files & seed data
+│   ├── postman/          # Postman collection
+│   ├── src/              # Controllers, Services, Models
+│   └── .env.example
+├── client/               # React + Vite frontend
+│   ├── src/              # Pages, Components, Hooks
+│   └── index.css         # Global Design System
 └── README.md
 ```
-
----
-
-## ✨ Features
-
-- ✅ Full CRUD for meetings with server-side validation
-- ✅ Participant & room conflict detection
-- ✅ Online + offline meeting support
-- ✅ Calendar views (day / week / month)
-- ✅ Slot picker showing free windows
-- ✅ Soft-delete with status log history
-- ✅ Role-based access (Admin / User)
-- ✅ All times in UTC, rendered in user timezone
-- 🌟 Recurring meetings (daily / weekly / monthly)
-- 🌟 Email invites with .ics attachment
-- 🌟 Auto-generated Jitsi meeting links
-- 🌟 10-minute pre-meeting reminders
-- 🌟 Drag-and-drop calendar reschedule
 
 ---
 

@@ -1,0 +1,94 @@
+Context & Objective:
+You are an expert Full-Stack developer building a "Meeting Slot Booking System". This is an independent hackathon module; it must be a standalone product with no dependencies on other modules. You must implement all authentication, user management, and supporting infrastructure within this module.
+
+Tech Stack Requirements (STRICT):
+
+Frontend: React.js with Vite ONLY. Do not use Next.js, Angular, or Vue.
+
+Backend: Node.js with Express ONLY.
+
+Database: MySQL or PostgreSQL. No MongoDB or Firebase.
+
+Secrets: All secrets MUST be in .env files. Hardcoded secrets will result in lost marks.
+
+Core Business Logic & Validations (MUST be Server-Side):
+All validations must be enforced on the SERVER.
+
+Conflict Checks: You must run conflict checks server-side at both create and update time.
+
+Time Zones: You must explicitly store all times in UTC and render them in the user's timezone.
+
+Start/End Time: Start time must be in the future and strictly before the end time.
+
+Participant Conflicts: No participant can have an overlapping meeting in the requested slot.
+
+Room Conflicts (Offline): Room availability and participant availability must both be validated for offline meetings. The room must be free AND have a capacity >= the participant count.
+
+Online Links: Online meetings must have a non-empty meeting link saved before the status moves to Scheduled.
+
+Meeting Details: The meeting title is mandatory and must be a minimum of 3 characters. At least one participant other than the organizer is required.
+
+Status Tracking: Cancelled meetings must be soft-deleted (status = Cancelled) to preserve history. All meeting changes must be logged in the meeting_status_log.
+
+Required Database Schema:
+
+users: id, name, email, role
+
+rooms: id, name, capacity, equipment, location
+
+meetings: id, title, agenda, type (online/offline), start_time, end_time, room_id, online link, organizer_id, status, created_at
+
+meeting_participants: id, meeting_id, user_id, response (Accepted/Declined/Tentative)
+
+meeting_status_log: id, meeting_id, from_status, to_status, changed_by, changed_at, reason
+
+Required UI Screens:
+
+Calendar Dashboard: Day/week/month views of meetings.
+
+Create Meeting: Title, agenda, type, duration, participants, room/link.
+
+Slot Picker: Show free slots for participants (and room, if offline).
+
+Meeting Detail Page: Full info, participants, link / room, status, actions.
+
+My Meetings: Upcoming and past meetings for the logged-in user.
+
+Meeting Rooms (Admin): Manage rooms with capacity and equipment.
+
+Reports: Meeting count, room utilization, no-show tracking.
+
+Required APIs (RESTful, returning JSON):
+
+POST /api/meetings: Create a meeting
+
+GET /api/meetings: List meetings with filters
+
+GET /api/meetings/:id: Meeting details
+
+PUT /api/meetings/:id: Reschedule / edit a meeting
+
+DELETE /api/meetings/:id: Cancel a meeting
+
+GET /api/availability?participants=&date=: Free slots for a set of participants
+
+GET /api/rooms: List meeting rooms
+
+POST /api/rooms: Create / edit room (admin)
+
+GET /api/calendar?from=&to=: Calendar feed
+
+Bonus Points (Implement these for Innovation Marks):
+
+Recurring meetings (daily / weekly / monthly).
+
+Email invites with .ics calendar file attachment.
+
+Auto-generated online links via integration (e.g., a placeholder Jitsi link).
+
+Reminders 10 minutes before start.
+
+Drag-and-drop reschedule on the calendar.
+
+Execution Instructions:
+Generate an Implementation Plan and Task List first. Once approved, build the database schema and server-side conflict logic before moving to the frontend. Ensure you provide a .sql dump or migrations folder for the database submission and a Postman collection or Swagger file for API documentation.
