@@ -1,0 +1,24 @@
+{
+  "users": [
+    { "id": "1", "name": "Jai", "email": "jai@example.com", "role": "admin" },
+    { "id": "2", "name": "Alice", "email": "alice@example.com", "role": "user" }
+  ],
+  "rooms": [
+    { "id": "101", "name": "Conference Room A", "capacity": 10, "equipment": "Projector, Whiteboard" },
+    { "id": "102", "name": "Meeting Room B", "capacity": 4, "equipment": "TV" }
+  ],
+  "meetings": [
+    {
+      "id": "m1",
+      "title": "Project Kickoff",
+      "agenda": "Discuss initial requirements",
+      "type": "offline",
+      "roomId": "101",
+      "link": "",
+      "start": "2026-05-18T10:00:00Z",
+      "end": "2026-05-18T11:00:00Z",
+      "participants": ["1", "2"],
+      "status": "Scheduled"
+    }
+  ]
+}
