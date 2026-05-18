@@ -6,8 +6,10 @@ export default function MyMeetings() {
   const [meetings, setMeetings] = useState([]);
 
   useEffect(() => {
-    // Assuming logged in user is ID '1'
+    // We assume the logged-in user has the ID '1' (Jai)
+    // In a real application, this ID would come from your authentication context/token.
     api.get('/meetings').then((res) => {
+      // Filter the meetings to only include ones where our user ID ('1') is in the participants array
       const myMtgs = res.data.filter(m => m.participants.includes('1'));
       setMeetings(myMtgs);
     });
@@ -16,6 +18,8 @@ export default function MyMeetings() {
   return (
     <div className="bg-white p-6 rounded shadow max-w-4xl mx-auto">
       <h2 className="text-xl font-bold mb-4">5. My Meetings</h2>
+      
+      {/* Simple HTML table to display tabular data clearly */}
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="bg-gray-100">
@@ -32,6 +36,7 @@ export default function MyMeetings() {
               <td className="p-2 border">{new Date(m.start).toLocaleString()}</td>
               <td className="p-2 border">{m.status}</td>
               <td className="p-2 border text-blue-600 hover:underline">
+                {/* Link component used instead of <a> tag to prevent full page reloads */}
                 <Link to={`/meeting/${m.id}`}>View</Link>
               </td>
             </tr>
