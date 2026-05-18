@@ -38,7 +38,7 @@ app.get('/api/rooms', async (req, res) => {
 app.post('/api/rooms', async (req, res) => {
   const { name, capacity, equipment } = req.body;
   const id = Date.now().toString();
-  
+
   try {
     const result = await db.query(
       'INSERT INTO rooms (id, name, capacity, equipment) VALUES ($1, $2, $3, $4) RETURNING *',
@@ -76,7 +76,7 @@ app.post('/api/meetings', async (req, res) => {
 
   try {
     await db.query('BEGIN');
-    
+
     const meetingResult = await db.query(
       'INSERT INTO meetings (id, title, agenda, type, room_id, link, start_time, end_time, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
       [id, title, agenda, type, roomId || null, link || '', start, end, status]
@@ -110,7 +110,7 @@ app.post('/api/meetings', async (req, res) => {
 app.put('/api/meetings/:id', async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
-  
+
   if (Object.keys(updates).length === 0) {
     return res.status(400).json({ error: 'No fields to update' });
   }
@@ -124,14 +124,14 @@ app.put('/api/meetings/:id', async (req, res) => {
       if (key === 'end') dbKey = 'end_time';
       return `${dbKey} = $${index + 1}`;
     }).join(', ');
-    
+
     const values = Object.values(updates);
     values.push(id); // for the WHERE clause
 
     const query = `UPDATE meetings SET ${setClause} WHERE id = $${values.length} RETURNING *`;
-    
+
     const result = await db.query(query, values);
-    
+
     if (result.rows.length > 0) {
       // Re-fetch with participants to return full object
       const fullMeeting = await db.query(`
@@ -158,7 +158,7 @@ app.get('/api/reports', async (req, res) => {
     const meetingsCount = await db.query('SELECT COUNT(*) FROM meetings');
     const roomsCount = await db.query('SELECT COUNT(*) FROM rooms');
     const cancelledCount = await db.query("SELECT COUNT(*) FROM meetings WHERE status = 'Cancelled'");
-    
+
     res.json({
       totalMeetings: parseInt(meetingsCount.rows[0].count),
       totalRooms: parseInt(roomsCount.rows[0].count),
@@ -172,4 +172,4 @@ app.get('/api/reports', async (req, res) => {
 
 // 4. Start the server
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(\`Minimal backend running on http://localhost:\${PORT}\`));
+app.listen(PORT, () => console.log(`Minimal backend running on http://localhost:${PORT}`));
