@@ -1,11 +1,31 @@
 {
   "users": [
-    { "id": "1", "name": "Jai", "email": "jai@example.com", "role": "admin" },
-    { "id": "2", "name": "Alice", "email": "alice@example.com", "role": "user" }
+    {
+      "id": "1",
+      "name": "Jai",
+      "email": "jai@example.com",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "name": "Alice",
+      "email": "alice@example.com",
+      "role": "user"
+    }
   ],
   "rooms": [
-    { "id": "101", "name": "Conference Room A", "capacity": 10, "equipment": "Projector, Whiteboard" },
-    { "id": "102", "name": "Meeting Room B", "capacity": 4, "equipment": "TV" }
+    {
+      "id": "101",
+      "name": "Conference Room A",
+      "capacity": 10,
+      "equipment": "Projector, Whiteboard"
+    },
+    {
+      "id": "102",
+      "name": "Meeting Room B",
+      "capacity": 4,
+      "equipment": "TV"
+    }
   ],
   "meetings": [
     {
@@ -17,8 +37,27 @@
       "link": "",
       "start": "2026-05-18T10:00:00Z",
       "end": "2026-05-18T11:00:00Z",
-      "participants": ["1", "2"],
+      "participants": [
+        "1",
+        "2"
+      ],
       "status": "Scheduled"
+    },
+    {
+      "id": "1779067642270",
+      "status": "Scheduled",
+      "title": "Sprint Planning",
+      "agenda": "Plan the sprint deliverables",
+      "type": "offline",
+      "roomId": "Room 101",
+      "link": "",
+      "start": "2026-05-20T10:00",
+      "end": "2026-05-20T11:00",
+      "participants": [
+        "1",
+        "2",
+        "3"
+      ]
     }
   ]
 }
